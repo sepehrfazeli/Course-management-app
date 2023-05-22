@@ -1,0 +1,672 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+
+//-------------------------------person-------------------------
+/**
+ * @brief The Person class represents an individual with their last name, first name, and email address.
+ */
+class Person {
+protected:
+    string lastName; /**< The last name of the person. */
+    string firstName; /**< The first name of the person. */
+    string emailAddress; /**< The email address of the person. */
+    
+public:
+    /**
+     * @brief Constructs a new Person object with the given details.
+     *
+     * @param lastName The last name of the person.
+     * @param firstName The first name of the person.
+     * @param emailAddress The email address of the person.
+     */
+    Person(string lastName, string firstName, string emailAddress);
+    
+    /**
+     * @brief Get the email address of the person.
+     *
+     * @return The email address.
+     */
+    string getEmailAddress(){return emailAddress;}
+    
+    /**
+     * @brief Get the first name of the person.
+     *
+     * @return The first name.
+     */
+    string getFirstName(){
+        return firstName;
+    }
+    
+    /**
+     * @brief Get the last name of the person.
+     *
+     * @return The last name.
+     */
+    string getLastName(){
+        return lastName;
+    }
+};
+
+Person::Person(string lastName, string firstName, string emailAddress)
+: lastName(lastName), firstName(firstName), emailAddress(emailAddress) {
+}//-------------------------------person-------------------------
+
+
+
+
+
+
+
+
+
+
+//-------------------------------student-------------------------
+/**
+ * @brief The Student class represents a student, inheriting from the Person class.
+ */
+class Student : public Person {
+private:
+    int matriculationNumber; /**< The matriculation number of the student. */
+    string university; /**< The university attended by the student. */
+    
+public:
+    /**
+     * @brief Constructs a new Student object with the given details.
+     *
+     * @param lastName The last name of the student.
+     * @param firstName The first name of the student.
+     * @param emailAddress The email address of the student.
+     * @param matriculationNumber The matriculation number of the student.
+     * @param university The university attended by the student.
+     */
+    Student(string lastName, string firstName, string emailAddress, int matriculationNumber, string university)
+    : Person(lastName, firstName, emailAddress), matriculationNumber(matriculationNumber), university(university) {}
+    
+    /**
+     * @brief Get the university attended by the student.
+     *
+     * @return The university name.
+     */
+    string getUniversity();
+};
+
+/**
+ * @brief Get the university attended by the student.
+ *
+ * @return The university name.
+ */
+string Student::getUniversity() {
+    return university;
+};//-------------------------------student-------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------Lecturer-------------------------
+/**
+ * @brief The Lecturer class represents a lecturer, inheriting from the Person class.
+ */
+class Lecturer : public Person {
+private:
+    string academicTitle; /**< The academic title of the lecturer. */
+    string university; /**< The university where the lecturer works. */
+    
+public:
+    /**
+     * @brief Constructs a new Lecturer object with the given details.
+     *
+     * @param lastName The last name of the lecturer.
+     * @param firstName The first name of the lecturer.
+     * @param emailAddress The email address of the lecturer.
+     * @param academicTitle The academic title of the lecturer.
+     * @param university The university where the lecturer works.
+     */
+    Lecturer(string lastName, string firstName, string emailAddress, string academicTitle, string university);
+    
+    /**
+     * @brief Get the academic title of the lecturer.
+     *
+     * @return The academic title.
+     */
+    string getAcademicTitle(){
+        return academicTitle;
+    }
+    
+    /**
+     * @brief Get the university where the lecturer works.
+     *
+     * @return The university name.
+     */
+    string getUniversity(){
+        return university;
+    }
+};
+
+/**
+ * @brief Constructs a new Lecturer object with the given details.
+ *
+ * @param lastName The last name of the lecturer.
+ * @param firstName The first name of the lecturer.
+ * @param emailAddress The email address of the lecturer.
+ * @param academicTitle The academic title of the lecturer.
+ * @param university The university where the lecturer works.
+ */
+Lecturer::Lecturer(string lastName, string firstName, string emailAddress, string academicTitle, string university)
+: Person(lastName, firstName, emailAddress), academicTitle(academicTitle), university(university) {
+}//-------------------------------Lecturer-------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------Course-------------------------
+/**
+ * @brief The Course class represents a course.
+ */
+class Course {
+private:
+    string courseName; /**< The name of the course. */
+    Lecturer courseLecturer; /**< The lecturer of the course. */
+    vector<Student> participants; /**< The participants enrolled in the course. */
+    
+public:
+    /**
+     * @brief Constructs a new Course object with the given name and lecturer.
+     *
+     * @param name The name of the course.
+     * @param lecturer The lecturer of the course.
+     */
+    Course(string name, Lecturer lecturer);
+    
+    /**
+     * @brief Get the name of the course.
+     *
+     * @return The course name.
+     */
+    string getName();
+    
+    /**
+     * @brief Get the lecturer of the course.
+     *
+     * @return The course lecturer.
+     */
+    Lecturer getLecturer();
+    
+    /**
+     * @brief Get the participants enrolled in the course.
+     *
+     * @return The vector of participants.
+     */
+    vector<Student> getParticipants();
+    
+    /**
+     * @brief Add a participant to the course.
+     *
+     * @param student The student to add as a participant.
+     * @return True if the student was added successfully, false otherwise.
+     */
+    bool addParticipant(Student student);
+    
+    /**
+     * @brief Print the list of participants in the course.
+     */
+    void printParticipants();
+    
+    /**
+     * @brief Print the details of the course.
+     */
+    void printCourseDetails();
+    
+    /**
+     * @brief Check if the course is fully booked.
+     *
+     * @return True if the course is fully booked, false otherwise.
+     */
+    bool isFullyBooked();
+};
+
+/**
+ * @brief Constructs a new Course object with the given name and lecturer.
+ *
+ * @param name The name of the course.
+ * @param lecturer The lecturer of the course.
+ */
+Course::Course(string name, Lecturer lecturer)
+: courseName(name), courseLecturer(lecturer) {
+}
+
+/**
+ * @brief Get the name of the course.
+ *
+ * @return The course name.
+ */
+string Course::getName() {
+    return courseName;
+}
+
+/**
+ * @brief Get the lecturer of the course.
+ *
+ * @return The course lecturer.
+ */
+Lecturer Course::getLecturer() {
+    return courseLecturer;
+}
+
+/**
+ * @brief Get the participants enrolled in the course.
+ *
+ * @return The vector of participants.
+ */
+vector<Student> Course::getParticipants() {
+    return participants;
+}
+
+/**
+ * @brief Add a participant to the course.
+ *
+ * @param student The student to add as a participant.
+ * @return True if the student was added successfully, false otherwise.
+ */
+bool Course::addParticipant(Student student) {
+    for (auto participant : participants) {
+        if (participant.getEmailAddress() == student.getEmailAddress()) {
+            cout << "Error: Student with the same email is already registered in this course.\n";
+            return false;
+        }
+    }
+    
+    if (participants.size() >= 10) {
+        cout << "Error: Maximum number of participants reached for this course.\n";
+        return false;
+    }
+    
+    participants.push_back(student);
+    return true;
+}
+
+/**
+ * @brief Print the list of participants in the course.
+ */
+void Course::printParticipants() {
+    cout << "Participants of the course '" << courseName << "':\n";
+    for (auto participant : participants) {
+        cout << "- " << participant.getFirstName() << " " << participant.getLastName()
+        << " (Email: " << participant.getEmailAddress() << ")\n";
+    }
+}
+
+/**
+ * @brief Print the details of the course.
+ */
+void Course::printCourseDetails() {
+    cout << "Course Name: " << courseName << "\n";
+    cout << "Lecturer: " << courseLecturer.getFirstName() << " " << courseLecturer.getLastName()
+    << " (Academic Title: " << courseLecturer.getAcademicTitle() << ")\n";
+}
+
+/**
+ * @brief Check if the course is fully booked.
+ *
+ * @return True if the course is fully booked, false otherwise.
+ */
+bool Course::isFullyBooked() {
+    return participants.size() == 10;
+}//-------------------------------Course-------------------------
+
+
+
+
+
+//-------------------------------Courses-------------------------
+/**
+ * @brief The Courses class represents a collection of courses.
+ */
+class Courses {
+private:
+    vector<Course> courseList; /**< The list of courses. */
+    
+public:
+    /**
+     * @brief Add a course to the collection.
+     *
+     * @param course The course to add.
+     */
+    void addCourse(Course course);
+    
+    /**
+     * @brief Get all the courses in the collection.
+     *
+     * @return The vector of courses.
+     */
+    vector<Course> getAllCourses();
+};
+
+/**
+ * @brief Add a course to the collection.
+ *
+ * @param course The course to add.
+ */
+void Courses::addCourse(Course course) {
+    courseList.push_back(course);
+}
+
+/**
+ * @brief Get all the courses in the collection.
+ *
+ * @return The vector of courses.
+ */
+vector<Course> Courses::getAllCourses() {
+    return courseList;
+}//-------------------------------Courses-------------------------
+
+
+
+
+
+//-------------------------------CourseRegistrationManager-------------------------
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/**
+ * @brief CourseRegistrationManager handles the registration of students in courses.
+ */
+class CourseRegistrationManager {
+public:
+    /**
+     * @brief Register a student in courses.
+     *
+     * @param courses The collection of courses.
+     */
+    static void registerStudent(Courses courses);
+    
+private:
+    /**
+     * @brief Check if a student is already registered in a course.
+     *
+     * @param student The student to check.
+     * @param course The course to check.
+     * @return True if the student is already registered, False otherwise.
+     */
+    static bool isStudentRegistered(Student student, Course course);
+};
+
+/**
+ * @brief Register a student in courses.
+ *
+ * @param courses The collection of courses.
+ */
+void CourseRegistrationManager::registerStudent(Courses courses) {
+    string courseName;
+    string surname;
+    string firstName;
+    string email;
+    int matriculationNumber;
+    string university;
+    
+    // Prompt user for registration information
+    cout << "Enter the course name: ";
+    getline(cin, courseName);
+    
+    cout << "Enter your surname: ";
+    getline(cin, surname);
+    
+    cout << "Enter your first name: ";
+    getline(cin, firstName);
+    
+    cout << "Enter your email: ";
+    getline(cin, email);
+    
+    cout << "Enter your matriculation number: ";
+    cin >> matriculationNumber;
+    cin.ignore();
+    
+    cout << "Enter your university: ";
+    getline(cin, university);
+    
+    // Create a student object with the provided information
+    Student student(surname, firstName, email, matriculationNumber, university);
+    
+    bool courseFound = false;
+    bool otherUniParticipant = false;
+    
+    // Check if the student is already registered in another course from a different university
+    for (auto course : courses.getAllCourses()) {
+        if (university != course.getLecturer().getUniversity()) {
+            for (auto participant : course.getParticipants()) {
+                if (participant.getEmailAddress() == email) {
+                    if (participant.getUniversity() == university) {
+                        cout << "Error: Students from other universities can only take one course.\n";
+                        otherUniParticipant = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (otherUniParticipant) {
+            break;
+        }
+    }
+    
+    // Check if the specified course exists and register the student if all conditions are met
+    for (auto course : courses.getAllCourses()) {
+        if (course.getName() == courseName) {
+            courseFound = true;
+            if (!otherUniParticipant) {
+                if (!isStudentRegistered(student, course)) {
+                    if (course.addParticipant(student)) {
+                        cout << "Registration successful!\n";
+                    }
+                } else {
+                    cout << "Error: Student already registered in the course.\n";
+                }
+            }
+            break;
+        }
+    }
+    
+    if (!courseFound) {
+        cout << "Error: Invalid course name.\n";
+    }
+}
+/**
+ * @brief Check if a student is already registered in a course.
+ *
+ * @param student The student to check.
+ * @param course The course to check.
+ * @return True if the student is already registered, False otherwise.
+ */
+bool CourseRegistrationManager::isStudentRegistered(Student student, Course course) {
+    for (auto participant : course.getParticipants()) {
+        if (participant.getEmailAddress() == student.getEmailAddress() &&
+            participant.getUniversity() == student.getUniversity()) {
+            return true;
+        }
+    }
+    return false;
+}//-------------------------------CourseRegistrationManager-------------------------
+
+
+
+
+
+
+
+
+
+//-------------------------------DataInitializer-------------------------
+// Class responsible for initializing data
+class DataInitializer {
+public:
+    static void initializeData(Courses& courseManager) {
+        Lecturer Lecturer1("Peter", "faber", "peter.faber@th-deg.de", "Professor", "THD");
+        Lecturer Lecturer2("Peter", "juettner", "peter.juettner@th-deg.de", "Professor", "THD");
+        
+        Student student1("Hanna", "Müller", "hanna.mueller@stud.th-deg.de", 12200627, "THD");
+        Student student2("Maxim", "Wagner", "maxim.wagner@stud.th-deg.de", 12200628, "THD");
+        Student student3("Lena", "Schmidt", "lena.schmidt@stud.th-deg.de", 12200629, "THD");
+        Student student4("Lukas", "Fischer", "lukas.fischer@stud.th-deg.de", 12200630, "THD");
+        Student student5("Laura", "Klein", "laura.klein@stud.th-deg.de", 12200631, "THI"); //Technische Hochschule Ingolstadt
+        
+        Course advancedSoftwareEngineering("Programming", Lecturer2);
+        Course semantics("Databases", Lecturer2);
+        Course compiler("Software Engineering", Lecturer1);
+        
+        advancedSoftwareEngineering.addParticipant(student1);
+        compiler.addParticipant(student1);
+        semantics.addParticipant(student1);
+        
+        advancedSoftwareEngineering.addParticipant(student2);
+        semantics.addParticipant(student2);
+        
+        advancedSoftwareEngineering.addParticipant(student3);
+        compiler.addParticipant(student3);
+        
+        semantics.addParticipant(student4);
+        compiler.addParticipant(student4);
+        
+        semantics.addParticipant(student5);
+        
+        
+        courseManager.addCourse(advancedSoftwareEngineering);
+        courseManager.addCourse(semantics);
+        courseManager.addCourse(compiler);
+    }
+};//-------------------------------DataInitializer-------------------------
+
+
+
+
+
+
+
+int main() {
+    // Create an instance of Courses to manage courses and participants
+    Courses courseManager;
+    
+    // Initialize data
+    DataInitializer::initializeData(courseManager);
+    
+    // Menu
+    int choice;
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Register for a course\n";
+        cout << "2. Output course participants\n";
+        cout << "3. Show available courses\n";
+        cout << "4. End the program\n";
+        cout << "Enter your choice (1-4): ";
+        cin >> choice;
+        
+        switch (choice) {
+            case 1: {
+                // Register a student for a course
+                CourseRegistrationManager::registerStudent(courseManager);
+                break;
+            }
+            case 2: {
+                cout << "1. Output participants for a specific course\n";
+                cout << "2. Output participants for all courses\n";
+                cout << "Enter your choice (1-2): ";
+                int subChoice;
+                cin >> subChoice;
+                
+                if (subChoice == 1) {
+                    // Output participants for a specific course
+                    string courseName;
+                    cout << "Enter the course name: ";
+                    cin.ignore();
+                    getline(cin, courseName);
+                    
+                    bool courseFound = false;
+                    for (auto course : courseManager.getAllCourses()) {
+                        if (course.getName() == courseName) {
+                            courseFound = true;
+                            course.printParticipants();  // Print participants of the specific course
+                            break;
+                        }
+                    }
+                    
+                    if (!courseFound) {
+                        cout << "Error: Invalid course name.\n";
+                    }
+                } else if (subChoice == 2) {
+                    // Output participants for all courses
+                    for (auto course : courseManager.getAllCourses()) {
+                        course.printCourseDetails();  // Print course details
+                        course.printParticipants();   // Print participants of the course
+                        cout << endl;
+                    }
+                } else {
+                    cout << "Error: Invalid choice.\n";
+                }
+                
+                break;
+            }
+            case 3: {
+                // Show available courses
+                vector<Course> availableCourses;
+                
+                for (auto course : courseManager.getAllCourses()) {
+                    if (!course.isFullyBooked()) {
+                        availableCourses.push_back(course);  // Collect courses with available spots
+                    }
+                }
+                
+                if (availableCourses.empty()) {
+                    cout << "All courses are fully booked.\n";
+                } else {
+                    cout << "Courses with available spots:\n";
+                    for (auto course : availableCourses) {
+                        cout << "- " << course.getName() << " (Lecturer: "
+                        << course.getLecturer().getFirstName() << " "
+                        << course.getLecturer().getLastName() << ", Title: "
+                        << course.getLecturer().getAcademicTitle() << ")\n";
+                        unsigned long freePlaces = 10 - course.getParticipants().size();
+                        cout << "  Free spots: " << freePlaces << "\n";
+                    }
+                }
+                
+                break;
+            }
+            case 4: {
+                // End the program and notify participants of remaining courses
+                cout << "Ending the program. Participants to be notified:\n";
+                for (auto course : courseManager.getAllCourses()) {
+                    if (!course.isFullyBooked()) {
+                        cout << "- Participants of the course '" << course.getName() << "'\n";
+                        course.printParticipants();  // Print participants of remaining courses
+                    }
+                }
+                break;
+            }
+            default:
+                cout << "Error: Invalid choice. Please try again.\n";
+        }
+    } while (choice != 4);
+    
+    return 0;
+}
+
+
